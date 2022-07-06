@@ -6,8 +6,11 @@ const {
   arrayify,
   hexlify,
   toUtf8Bytes,
+  formatEther,
+  parseEther,
 } = require("ethers/lib/utils");
 
+const { BigNumber } = require("ethers");
 describe("Token contract", function () {
   it("Deployment should assign the total supply of tokens to the owner", async function () {
     const [owner, addr1, addr2] = await ethers.getSigners();
@@ -31,16 +34,18 @@ describe("Token contract", function () {
       tokenId: 0,
       metaUri: "HHH",
       mintCount: 100,
-      minPrice: 10,
+      minPrice: 1,
       initialSupply: 1000,
       royaltyFee: 25,
       royaltyAddress: owner.address,
       signature: sig,
     };
 
-    console.log(
-      await (await hardhatToken.redeem(addr1.address, voucher)).wait()
-    );
+    await (
+      await hardhatToken.redeem(addr1.address, voucher, {
+        value: ethers.utils.parseEther("0.05"),
+      })
+    ).wait();
     // const ownerBalance = await hardhatToken.balanceOf(owner.address);
 
     // expect(await hardhatToken.totalSupply()).to.equal(ownerBalance);

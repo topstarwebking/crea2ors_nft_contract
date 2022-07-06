@@ -112,17 +112,16 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
     // }
 
     function redeem(address redeemer, NFTVoucher memory voucher) public payable returns (uint256) {
-        address signer = _verify(voucher);
-        console.log("signer %s",  signer);
-        require(signer);
         require(voucher.initialSupply <= 1000, "Initial supply cannot be more than 1000");
-        // uint256 _id = _getNextTokenID();
-        // require(_id <= tokenLimit, "Flushed nft total limit");
-        // require(msg.value >= voucher.minPrice * voucher.initialSupply, "Insufficient funds to redeem");
-        // require(curMintedSupplies[voucher.tokenId] + voucher.mintCount > initialSupplies[voucher.tokenId], "All minted!");
+        uint256 _id = _getNextTokenID();
+        console.log(_id);
+        require(_id <= tokenLimit, "Flushed nft total limit");
+        require(msg.value >= voucher.minPrice * voucher.initialSupply, "Insufficient funds to redeem");
+        require(curMintedSupplies[voucher.tokenId] + voucher.mintCount > initialSupplies[voucher.tokenId], "All minted!");
+        if (voucher.initialSupply != 0)
+            _mint(redeemer, voucher.tokenId, voucher.mintCount, "");
         // setURI(voucher.tokenId, voucher.metaUri);
-        // if (voucher.initialSupply != 0)
-        //     _mint(redeemer, voucher.tokenId, voucher.mintCount, "");
+
         // uint256[] memory idArray = new uint256[](1);
         // idArray[0] = voucher.tokenId;
         // uint256[] memory mintCntArray = new uint256[](1);
