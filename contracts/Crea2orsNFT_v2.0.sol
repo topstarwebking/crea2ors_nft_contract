@@ -15,6 +15,8 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
     string public name;
     string public symbol;
 
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+
     mapping(uint256 => address) public royaltyAddresses; //NFT creator not owner
     mapping(uint256 => uint256) public initialSupplies;
     mapping(uint256 => uint256) public curMintedSupplies;
@@ -25,6 +27,12 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
     string private constant SIGNING_DOMAIN = "LazyNFT-Voucher";
     string private constant SIGNATURE_VERSION = "1";
 
+    struct Sig {
+        bytes32 r;
+        bytes32 s;
+        uint8 v;
+    }
+
     struct NFTVoucher {
         uint256 tokenId;
         string metaUri;
@@ -33,7 +41,7 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
         uint256 initialSupply;
         uint256 royaltyFee;
         address royaltyAddress;
-        bytes signature;
+        Sig signature;
     }
 
     constructor(
@@ -60,13 +68,14 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
 
     function _verify(NFTVoucher memory voucher) internal view returns(address) {
         bytes32 digest = _hash(voucher);
-        return ECDSA.recover(digest, voucher.signature);
+        return ecrecover(digest, voucher.signature.v, voucher.signature.r, voucher.signature.s);
     }
 
     function _hash(NFTVoucher memory voucher) internal view returns (bytes32) {
-        return _hashTypedDataV4(keccak256(abi.encode(
+        return keccak256(abi.encodePacked(
+            "\x19Ethereum Signed Message:\n32", 
             keccak256(bytes(voucher.metaUri))
-        )));
+        ));
     }
 
     function setContractURI(string memory contractURI_) public onlyOwner payable {
@@ -105,7 +114,8 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
     function redeem(address redeemer, NFTVoucher memory voucher) public payable returns (uint256) {
         address signer = _verify(voucher);
         console.log("signer %s",  signer);
-        // require(voucher.initialSupply <= 1000, "Initial supply cannot be more than 1000");
+        require(signer);
+        require(voucher.initialSupply <= 1000, "Initial supply cannot be more than 1000");
         // uint256 _id = _getNextTokenID();
         // require(_id <= tokenLimit, "Flushed nft total limit");
         // require(msg.value >= voucher.minPrice * voucher.initialSupply, "Insufficient funds to redeem");
