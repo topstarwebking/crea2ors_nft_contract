@@ -33,7 +33,6 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
         uint256 initialSupply;
         uint256 royaltyFee;
         address royaltyAddress;
-        bytes traits;
         bytes signature;
     }
 
@@ -66,8 +65,6 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
 
     function _hash(NFTVoucher memory voucher) internal view returns (bytes32) {
         return _hashTypedDataV4(keccak256(abi.encode(
-            voucher.initialSupply,
-            voucher.royaltyFee,
             keccak256(bytes(voucher.metaUri))
         )));
     }
@@ -108,25 +105,24 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
     function redeem(address redeemer, NFTVoucher memory voucher) public payable returns (uint256) {
         address signer = _verify(voucher);
         console.log("signer %s",  signer);
-        require(voucher.initialSupply <= 1000, "Initial supply cannot be more than 1000");
-        uint256 _id = _getNextTokenID();
-        require(_id <= tokenLimit, "Flushed nft total limit");
-        require(msg.value >= voucher.minPrice * voucher.initialSupply, "Insufficient funds to redeem");
-        require(curMintedSupplies[voucher.tokenId] + voucher.mintCount > initialSupplies[voucher.tokenId], "All minted!");
-        setURI(voucher.tokenId, voucher.metaUri);
-        if (voucher.initialSupply != 0)
-            _mint(signer, voucher.tokenId, voucher.mintCount, voucher.traits);
-        uint256[] memory idArray = new uint256[](1);
-        idArray[0] = voucher.tokenId;
-        uint256[] memory mintCntArray = new uint256[](1);
-        mintCntArray[0] = voucher.mintCount;
-        safeBatchTransferFrom(signer, redeemer, idArray, mintCntArray, "");
-        if (initialSupplies[voucher.tokenId] == 0) {
-            initialSupplies[voucher.tokenId] = voucher.initialSupply;
-            royaltyAddresses[voucher.tokenId] = voucher.royaltyAddress;
-            royaltyFees[voucher.tokenId] = voucher.royaltyFee;
-        }
-        curMintedSupplies[voucher.tokenId] += voucher.mintCount;
+        // require(voucher.initialSupply <= 1000, "Initial supply cannot be more than 1000");
+        // uint256 _id = _getNextTokenID();
+        // require(_id <= tokenLimit, "Flushed nft total limit");
+        // require(msg.value >= voucher.minPrice * voucher.initialSupply, "Insufficient funds to redeem");
+        // require(curMintedSupplies[voucher.tokenId] + voucher.mintCount > initialSupplies[voucher.tokenId], "All minted!");
+        // setURI(voucher.tokenId, voucher.metaUri);
+        // if (voucher.initialSupply != 0)
+        //     _mint(redeemer, voucher.tokenId, voucher.mintCount, "");
+        // uint256[] memory idArray = new uint256[](1);
+        // idArray[0] = voucher.tokenId;
+        // uint256[] memory mintCntArray = new uint256[](1);
+        // mintCntArray[0] = voucher.mintCount;
+        // if (initialSupplies[voucher.tokenId] == 0) {
+        //     initialSupplies[voucher.tokenId] = voucher.initialSupply;
+        //     royaltyAddresses[voucher.tokenId] = voucher.royaltyAddress;
+        //     royaltyFees[voucher.tokenId] = voucher.royaltyFee;
+        // }
+        // curMintedSupplies[voucher.tokenId] += voucher.mintCount;
 
         return voucher.tokenId;
     }

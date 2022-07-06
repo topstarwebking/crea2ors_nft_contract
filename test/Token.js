@@ -1,8 +1,25 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
+const {
+  solidityKeccak256,
+  splitSignature,
+  arrayify,
+  hexlify,
+  toUtf8Bytes,
+} = require("ethers/lib/utils");
+
 describe("Token contract", function () {
   it("Deployment should assign the total supply of tokens to the owner", async function () {
     const [owner, addr1, addr2] = await ethers.getSigners();
+    console.log(owner.address);
+    const str = toUtf8Bytes(
+      "https://crea2ors.mypinata.cloud/ipfs/QmXYUGpSkcggxfVSTDykz1sGdvaq7gVLvSP5te17hWQr6n"
+    );
+    hashed = solidityKeccak256(["bytes"], [str]);
+    console.log(hashed);
+    const signature = await owner.signMessage(hashed);
+    console.log("signature", signature);
+    //  const { r, s, v } = splitSignature(signature);
 
     const Token = await ethers.getContractFactory("Crea2orsNFT");
 
@@ -12,7 +29,7 @@ describe("Token contract", function () {
       "https://github.com",
       10
     );
-    console.log("2 stage");
+
     const voucher = {
       tokenId: 0,
       metaUri:
@@ -21,16 +38,15 @@ describe("Token contract", function () {
       minPrice: 10,
       initialSupply: 1000,
       royaltyFee: 25,
-      royaltyAddress: "0xcbd382aC994de5633A348347Cec4AaAF02A2954D",
-      traits: { power: "2000" },
-      signature:
-        "0x4764327f76183f4da242d1852e3a26a9c2d1677d8980d0eaa1ff6f5ed72fea6e6fcd86cf54d855d9e8f38f34fe98ca517dc942206f11ed441a169dce43f7f2231b",
+      royaltyAddress: owner.address,
+      signature: signature,
     };
-    console.log(voucher);
-    // const ownerBalance = await hardhatToken.balanceOf(owner.address);
-    expect(await hardhatToken.redeem(addr1, voucher)).to.equal(
-      "0xcbd382aC994de5633A348347Cec4AaAF02A2954D"
+
+    console.log(
+      await (await hardhatToken.redeem(addr1.address, voucher)).wait()
     );
+    // const ownerBalance = await hardhatToken.balanceOf(owner.address);
+
     // expect(await hardhatToken.totalSupply()).to.equal(ownerBalance);
   });
 });
