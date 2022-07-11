@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// Author: gentlesmile918@gmail.com
+// Author: topstardev.703@gmail.com
 pragma solidity >=0.8.0 <0.9.0;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";

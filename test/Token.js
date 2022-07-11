@@ -62,9 +62,10 @@ describe("Token contract", function () {
     expect(await hardhatToken.balanceOf(addr1.address, 0)).to.equal(200);
 
     await hardhatToken.connect(addr1).setApprovalForAll(owner.address, true);
-    await (
-      await hardhatToken.transferNFT(0, 50, addr1.address, addr2.address)
-    ).wait();
+
+    await hardhatToken
+      .connect(addr2)
+      .transferNFT(0, 50, addr1.address, addr2.address);
     expect(await hardhatToken.balanceOf(addr2.address, 0)).to.equal(50);
 
     const voucher1 = {

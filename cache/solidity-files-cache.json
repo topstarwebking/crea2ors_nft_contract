@@ -9,8 +9,8 @@
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -51,8 +51,8 @@
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -88,8 +88,8 @@
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -125,8 +125,8 @@
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -197,8 +197,8 @@
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -234,8 +234,8 @@
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -271,8 +271,8 @@
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -308,8 +308,8 @@
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -343,8 +343,8 @@
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -378,8 +378,8 @@
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -415,8 +415,8 @@
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -450,8 +450,8 @@
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -478,15 +478,15 @@
       ]
     },
     "D:\\Projects\\Jaime\\jonggu\\Brise Contract\\Final test\\crea2ors_nft_contract\\contracts\\Crea2orsNFT_v3.3.sol": {
-      "lastModificationDate": 1657528815978,
-      "contentHash": "e36060f7e0f7f5820500464db9f632a2",
+      "lastModificationDate": 1657542603259,
+      "contentHash": "7027fe984f14ecc05120cd307a2b9bbd",
       "sourceName": "contracts/Crea2orsNFT_v3.3.sol",
       "solcConfig": {
         "version": "0.8.5",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 20000
           },
           "outputSelection": {
             "*": {
@@ -515,6 +515,78 @@
       ],
       "artifacts": [
         "Crea2orsNFT"
+      ]
+    },
+    "D:\\Projects\\Jaime\\jonggu\\Brise Contract\\Final test\\crea2ors_nft_contract\\contracts\\Crea2ors_Manager.sol": {
+      "lastModificationDate": 1657542260240,
+      "contentHash": "33489ebb1ca4ea8230d5cf53377f3acb",
+      "sourceName": "contracts/Crea2ors_Manager.sol",
+      "solcConfig": {
+        "version": "0.8.5",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 20000
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Interface/ICrea2orsNFT.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.0 <0.9.0"
+      ],
+      "artifacts": [
+        "Crea2ors_Manager"
+      ]
+    },
+    "D:\\Projects\\Jaime\\jonggu\\Brise Contract\\Final test\\crea2ors_nft_contract\\contracts\\Interface\\ICrea2orsNFT.sol": {
+      "lastModificationDate": 1657542189279,
+      "contentHash": "9442de4c06d1da622dfd33bbe92fb981",
+      "sourceName": "contracts/Interface/ICrea2orsNFT.sol",
+      "solcConfig": {
+        "version": "0.8.5",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 20000
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.8.0 <0.9.0"
+      ],
+      "artifacts": [
+        "ICrea2orsNFT"
       ]
     }
   }
