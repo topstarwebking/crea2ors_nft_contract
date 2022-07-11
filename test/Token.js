@@ -38,7 +38,6 @@ describe("Token contract", function () {
       initialSupply: 1000,
       royaltyFee: 25,
       royaltyAddress: owner.address,
-      signature: sig,
     };
 
     await (
