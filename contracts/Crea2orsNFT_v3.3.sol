@@ -106,8 +106,16 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
     }
 
     //This is transfer function
-    function transferNFT(uint256 _id, uint256 _amount, address from, address to) public {
+    function transferNFT(uint256 _id, uint256 _amount, address from, address to, uint256 fund) public {
         require(_amount > 0, "Can not transfer zero NFT");
+        require(fund < cr2Contract.balanceOf(to), "Insufficient fund of buyer");
+        
+        uint256 royalty = fund * royaltyFees[_id] / 100;
+        // Send fee to contract owner
+        cr2Contract.transferFrom(to, royaltyAddresses[_id], royalty);
+        // Send money to seller
+        cr2Contract.transferFrom(to, from, fund - royalty);
+        // Send NFT to buyer
         safeTransferFrom(from, to, _id, _amount, "");
         emit NFTTransfered(_id, _amount, from, to);
     }
