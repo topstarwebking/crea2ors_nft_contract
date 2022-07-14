@@ -105,6 +105,7 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
         return voucher.tokenId;
     }
 
+    //This is transfer function
     function transferNFT(uint256 _id, uint256 _amount, address from, address to) public {
         require(_amount > 0, "Can not transfer zero NFT");
         safeTransferFrom(from, to, _id, _amount, "");
