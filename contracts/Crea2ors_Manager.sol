@@ -3,6 +3,7 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 interface ICrea2orsNFT {
+<<<<<<< HEAD
   function transferNFT(uint256 id, uint256 amount, address from, address to, uint256 fund) external;
 }
 
@@ -17,14 +18,41 @@ contract Crea2ors_Manager {
   constructor(address cr2ContractAddress) {
     cr2Contract = ICrea2Crypto(cr2ContractAddress);
   }
+=======
+    function transferNFT(
+        uint256 id,
+        uint256 amount,
+        address from,
+        address to
+    ) external;
+}
 
-  function addCollection(address newAddress) public {
-    ICrea2orsNFT nftContract = ICrea2orsNFT(newAddress);
-    collections[newAddress] = nftContract;
-  }
+contract Crea2ors_Manager {
+    mapping(address => ICrea2orsNFT) collections;
+>>>>>>> bb62dece8ecb8b4d5338895361034e619fb83b17
 
+    // add new collection to nft collection list
+    function addCollection(address newAddress) public {
+        ICrea2orsNFT nftContract = ICrea2orsNFT(newAddress);
+        collections[newAddress] = nftContract;
+    }
+
+<<<<<<< HEAD
   function transferNFT(address collectionAddress, address from, address to, uint256 id, uint256 amount, uint256 fund) public {
     cr2Contract.approve(address(this), fund);
     collections[collectionAddress].transferNFT(id, amount, from, to, fund);
   }
 }
+=======
+    // transfer nft
+    function transferNFT(
+        address collectionAddress,
+        address from,
+        address to,
+        uint256 id,
+        uint256 amount
+    ) public {
+        collections[collectionAddress].transferNFT(id, amount, from, to);
+    }
+}
+>>>>>>> bb62dece8ecb8b4d5338895361034e619fb83b17
