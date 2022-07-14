@@ -7,12 +7,19 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 
+interface ICrea2Crypto {
+  function transfer(address to, uint tokens) external;
+  function balanceOf(address addr) external returns (uint256);
+  function transferFrom(address from , address to, uint tokens) external;
+}
+
 contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
     uint256 public _currentTokenID = 0;
     string private _contractURI;
     uint256 private tokenLimit;
     string public name;
     string public symbol;
+    ICrea2Crypto cr2Contract;
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
@@ -36,6 +43,7 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
         uint256 tokenId;
         string metaUri;
         uint256 mintCount;
+        uint256 mintPrice;
         uint256 initialSupply;
         uint256 royaltyFee;
         address royaltyAddress;
@@ -45,12 +53,14 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
         string memory name_,
         string memory symbol_,
         string memory contractURI_,
-        uint256 totalLimit_
+        uint256 totalLimit_,
+        address cr2ContractAddress_
     ) ERC1155("") EIP712(SIGNING_DOMAIN, SIGNATURE_VERSION) {
         constructed = true;
         tokenLimit = totalLimit_;
         name = name_;
         symbol = symbol_;
+        cr2Contract = ICrea2Crypto(cr2ContractAddress_);
         emit ContractDeployed(msg.sender, contractURI_);
 
         setContractURI(contractURI_);
@@ -74,6 +84,7 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
     }
 
     function redeem(address redeemer, NFTVoucher memory voucher) public payable returns (uint256) {
+        require(voucher.mintPrice < cr2Contract.balanceOf(redeemer), "insufficient funds");
         require(voucher.initialSupply <= 1000, "Initial supply cannot be more than 1000");
         require(_currentTokenID < tokenLimit, "Flushed nft total limit");
         require(voucher.mintCount != 0, "Can not mint Zero count");
@@ -87,6 +98,8 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
         } 
         require(curMintedSupplies[voucher.tokenId] + voucher.mintCount < initialSupplies[voucher.tokenId], "All minted!");
         _mint(redeemer, voucher.tokenId, voucher.mintCount, "");
+        // when mint, transfer CREA2 token to NFT creator
+        cr2Contract.transfer(voucher.royaltyAddress, voucher.mintCount);
         curMintedSupplies[voucher.tokenId] += voucher.mintCount;
         emit LazyMinted(voucher.tokenId);
         return voucher.tokenId;
