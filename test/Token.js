@@ -74,7 +74,6 @@ describe("Token contract", function () {
 
   it("This is second mint", async function () {
     const [owner, addr1, addr2] = await ethers.getSigners();
-    console.log(owner.address);
     const str = toUtf8Bytes("HHH");
 
     hashed = solidityKeccak256(["bytes"], [str]);
