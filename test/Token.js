@@ -14,7 +14,7 @@ const { BigNumber } = require("ethers");
 describe("Token contract", function () {
   it("Deployment should assign the total supply of tokens to the owner", async function () {
     const [owner, addr1, addr2] = await ethers.getSigners();
-   
+
     const str = toUtf8Bytes("HHH");
 
     hashed = solidityKeccak256(["bytes"], [str]);
@@ -48,7 +48,6 @@ describe("Token contract", function () {
 
     expect(await hardhatToken._currentTokenID()).to.equal(1);
     expect(await hardhatToken.getCurMintedSupply(0)).to.equal(100);
-    expect(await hardhatToken.uri(0)).to.equal("HHH");
     expect(await hardhatToken.contractURI()).to.equal("https://github.com");
 
     await (
