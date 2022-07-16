@@ -14,7 +14,7 @@ const { BigNumber } = require("ethers");
 describe("Token contract", function () {
   it("Deployment should assign the total supply of tokens to the owner", async function () {
     const [owner, addr1, addr2] = await ethers.getSigners();
-    console.log(owner.address);
+   
     const str = toUtf8Bytes("HHH");
 
     hashed = solidityKeccak256(["bytes"], [str]);
