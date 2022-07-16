@@ -49,7 +49,6 @@ describe("Token contract", function () {
     expect(await hardhatToken._currentTokenID()).to.equal(1);
     expect(await hardhatToken.getCurMintedSupply(0)).to.equal(100);
     expect(await hardhatToken.uri(0)).to.equal("HHH");
-    expect(await hardhatToken.contractURI()).to.equal("https://github.com");
 
     await (
       await hardhatToken.redeem(addr1.address, voucher, {
