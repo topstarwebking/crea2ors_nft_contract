@@ -179,3 +179,5 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
     event NFTTransfered(uint256, uint256, address, address);
 
 }
+
+//all finished
