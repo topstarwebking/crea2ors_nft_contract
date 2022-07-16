@@ -47,7 +47,7 @@ describe("Token contract", function () {
     ).wait();
 
     expect(await hardhatToken._currentTokenID()).to.equal(1);
-    expect(await hardhatToken.getCurMintedSupply(0)).to.equal(100);
+   
 
     await hardhatToken.transferNFT(0, 50, addr1.address, addr2.address);
     expect(await hardhatToken.balanceOf(addr2.address, 0)).to.equal(50);
