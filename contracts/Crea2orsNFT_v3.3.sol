@@ -99,7 +99,7 @@ contract Crea2orsNFT is ERC1155, Ownable, EIP712 {
         require(curMintedSupplies[voucher.tokenId] + voucher.mintCount < initialSupplies[voucher.tokenId], "All minted!");
         _mint(redeemer, voucher.tokenId, voucher.mintCount, "");
         // when mint, transfer CREA2 token to NFT creator
-        cr2Contract.transfer(voucher.royaltyAddress, voucher.mintCount);
+        //cr2Contract.transfer(voucher.royaltyAddress, voucher.mintCount);
         curMintedSupplies[voucher.tokenId] += voucher.mintCount;
         emit LazyMinted(voucher.tokenId);
         return voucher.tokenId;
